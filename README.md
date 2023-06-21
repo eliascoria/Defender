@@ -1,5 +1,5 @@
-# Phaser 3 Template
+# Defender Game
 
-Plantilla para iniciar nuevos proyectos con PHASER 3.
+Juego hecho por Elias Coria.
 
-Contiene configuración inicial y buenas prácticas de estructuras de carpetas.
+Proyecto realizado en UnRaf.
