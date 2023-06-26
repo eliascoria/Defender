@@ -52,7 +52,9 @@ export default class Game extends Phaser.Scene {
     //add shoot
     this.shoot = this.physics.add.group({
       collideWorldBounds: false,
-    });
+    })
+  
+
     //add collider //add overlap between bullets and enemies
     this.physics.add.collider(this.player, this.enemy);
     this.physics.add.collider(this.shoot, this.enemy);
@@ -78,7 +80,7 @@ export default class Game extends Phaser.Scene {
       callbackScope: this,
       loop: true,
     });
-    this.timer = 30;
+    this.timer = 60;
     this.timerText = this.add.text(750, 20, this.timer, {
       fontsize: "32px",
       fontstyle: "bold",
@@ -113,7 +115,7 @@ export default class Game extends Phaser.Scene {
     }
     //SHOOT
     if(this.cursors.space.isDown){
-      this.shoot.create(this.player.x, this.player.y, "bala").setVelocityY(-500);
+      this.shoot.create(this.player.x, this.player.y, "bala").setVelocityY(-500).setGravityY(-700);
     }
   }
   spawnEnemy(){
