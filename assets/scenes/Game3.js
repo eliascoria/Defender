@@ -1,22 +1,24 @@
-export default class Game extends Phaser.Scene {
+export default class Game3 extends Phaser.Scene {
   score;
   gameOver;
   timer;
   vel;
+  hits;
   constructor() {
-    super("game");
+    super("game3");
   }
 
   init() {
     this.gameOver = false;
     this.score = 0;
     this.vel= 430;
+    this.hits= 0;
   }
   create() {
    //add sound
    this.soundshoot = this.sound.add("shoots");
     //add background
-    this.add.image(400, 300, "background1").setScale(1);
+    this.add.image(400, 300, "background3").setScale(1);
     let platform = this.physics.add.staticGroup();
     platform.create(400, 640, "platform").setScale(1).refreshBody();
     //add sprites player
@@ -44,11 +46,20 @@ export default class Game extends Phaser.Scene {
     //add platform
     
     //add enemies
-    this.enemy = this.physics.add.group();
+    this.boss = this.physics.add.group();
+    this.boss = this.physics.add.sprite(400, 100, "boss").setScale(0.80);
+    this.boss.body.allowGravity = false;
+    this.enemy = this.physics.add.group(); 
     //add enemies event
     this.time.addEvent({
       delay: 3000,
       callback: this.spawnEnemy,
+      callbackScope: this,
+      loop: true,
+    })
+    this.time.addEvent({
+      delay: 5000,
+      callback: this.spawnEnemy2,
       callbackScope: this,
       loop: true,
     })
@@ -65,6 +76,8 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.player, this.enemy);
     this.physics.add.collider(this.shoot, this.enemy);
     this.physics.add.collider(this.enemy, platform);
+    this.physics.add.collider(this.player, this.boss);
+    this.physics.add.collider(this.shoot, this.boss);
     this.physics.add.overlap(
       this.shoot,
       this.enemy,
@@ -100,7 +113,14 @@ export default class Game extends Phaser.Scene {
       this.reduce,
       null,
       this
-    )
+    );
+    this.physics.add.overlap(
+      this.shoot,
+      this.boss,
+      this.destroyBoss,
+      null,
+      this
+    );
 
     //add score on scene
     this.scoreText = this.add.text(20, 20, "Score:" + this.score, {
@@ -123,8 +143,8 @@ export default class Game extends Phaser.Scene {
     });
   }
   update() {
-    if (this.score >= 200) {
-      this.scene.start("win");
+    if (this.score >= 100) {
+      this.scene.start("win3");
     }
     if (this.gameOver) {
       this.scene.start("gameOver");
@@ -156,7 +176,12 @@ export default class Game extends Phaser.Scene {
   }
   spawnEnemy(){
     const randomX = Phaser.Math.RND.between(0,800);
-    this.enemy.create(randomX, 0, "enemy").setCircle(35, 40, 25).setCollideWorldBounds(true);
+    this.enemy.create(randomX +200 , 0, "enemy").setCircle(35, 40, 25).setCollideWorldBounds(true);
+    console.log("enemy spawned", randomX);
+  }
+  spawnEnemy2(){
+    const randomX = Phaser.Math.RND.between(0,800);
+    this.enemy.create(randomX, 0, "enemy2").setCircle(35, 40, 25).setGravityY(300).setCollideWorldBounds(true);
     console.log("enemy spawned", randomX);
   }
   spawnBonus1(){
@@ -216,6 +241,13 @@ export default class Game extends Phaser.Scene {
     setTimeout(() => {
       text.destroy();},
       200);
+    }
+    destroyBoss(shoot, boss){
+      shoot.disableBody(true,true);
+      this.hits ++
+      if(this.hits = 100){
+        this.scene.start("win3")
+      }
     }
   onSecond() {
     this.timer--;

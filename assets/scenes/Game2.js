@@ -1,10 +1,10 @@
-export default class Game extends Phaser.Scene {
+export default class Game2 extends Phaser.Scene {
   score;
   gameOver;
   timer;
   vel;
   constructor() {
-    super("game");
+    super("game2");
   }
 
   init() {
@@ -16,7 +16,7 @@ export default class Game extends Phaser.Scene {
    //add sound
    this.soundshoot = this.sound.add("shoots");
     //add background
-    this.add.image(400, 300, "background1").setScale(1);
+    this.add.image(400, 300, "background2").setScale(1);
     let platform = this.physics.add.staticGroup();
     platform.create(400, 640, "platform").setScale(1).refreshBody();
     //add sprites player
@@ -49,6 +49,12 @@ export default class Game extends Phaser.Scene {
     this.time.addEvent({
       delay: 3000,
       callback: this.spawnEnemy,
+      callbackScope: this,
+      loop: true,
+    })
+    this.time.addEvent({
+      delay: 5000,
+      callback: this.spawnEnemy2,
       callbackScope: this,
       loop: true,
     })
@@ -124,7 +130,7 @@ export default class Game extends Phaser.Scene {
   }
   update() {
     if (this.score >= 200) {
-      this.scene.start("win");
+      this.scene.start("win2");
     }
     if (this.gameOver) {
       this.scene.start("gameOver");
@@ -156,7 +162,12 @@ export default class Game extends Phaser.Scene {
   }
   spawnEnemy(){
     const randomX = Phaser.Math.RND.between(0,800);
-    this.enemy.create(randomX, 0, "enemy").setCircle(35, 40, 25).setCollideWorldBounds(true);
+    this.enemy.create(randomX +200 , 0, "enemy").setCircle(35, 40, 25).setCollideWorldBounds(true);
+    console.log("enemy spawned", randomX);
+  }
+  spawnEnemy2(){
+    const randomX = Phaser.Math.RND.between(0,800);
+    this.enemy.create(randomX, 0, "enemy2").setCircle(35, 40, 25).setGravityY(300).setCollideWorldBounds(true);
     console.log("enemy spawned", randomX);
   }
   spawnBonus1(){
