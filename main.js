@@ -8,7 +8,6 @@ import Preload from "./assets/scenes/Preload.js";
 import Win from "./assets/scenes/Win.js";
 import Win3 from "./assets/scenes/Win3.js";
 import Win2 from "./assets/scenes/Win2.js";
-import Cinematic from "./assets/scenes/Cinematica.js";
 import Cinematica from "./assets/scenes/Cinematica.js";
 
 // Create a new Phaser config object
