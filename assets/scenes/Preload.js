@@ -25,7 +25,11 @@ export default class Preload extends Phaser.Scene {
     this.load.image("nlbtn","./assets/images/nextlevelbtn.png");
     this.load.image("back","./assets/images/backbtn.png");
     this.load.image("platform","./assets/images/platform.png");
-    this.load.audio("shoots","./assets/sounds/shootsound.wav")
+    this.load.audio("shoots","./assets/sounds/shootsound.wav");
+    this.load.audio("bonussound","./assets/sounds/bonus.wav");
+    this.load.audio("explosionsound","./assets/sounds/shortexplosion.wav");
+    this.load.audio("musicgame","./assets/sounds/music.wav");
+
 
     this.load.spritesheet("velocity","./assets/images/Bonus1.png", {
       frameWidth: 95,
@@ -41,20 +45,20 @@ export default class Preload extends Phaser.Scene {
   
   
   create() {
-    // this.bonus1 = this.anims.create({
-    //   key: "velocityanimation",
-    //   frames: this.anims.generateFrameNumbers("velocity", {start: 0, end: 1}),
-    //   frameRate: 10,
-    //   repeat: -1,
-    //   yoyo: true,
-    // })
-    // this.bonus2 = this.anims.create({
-    //   key: "pointsanimation",
-    //   frames: this.anims.generateFrameNumbers("extrapoints", {start: 0, end: 1}),
-    //   frameRate: 10,
-    //   repeat: -1,
-    //   yoyo: true,
-    // })
+    this.bonus1 = this.anims.create({
+      key: "velocityanimation",
+      frames: this.anims.generateFrameNumbers("velocity", {start: 0, end: 1}),
+      frameRate: 10,
+      repeat: -1,
+      yoyo: true,
+    })
+    this.bonus2 = this.anims.create({
+      key: "pointsanimation",
+      frames: this.anims.generateFrameNumbers("extrapoints", {start: 0, end: 1}),
+      frameRate: 10,
+      repeat: -1,
+      yoyo: true,
+    })
     //game
     this.scene.start("menu")
   }}

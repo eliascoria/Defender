@@ -17,6 +17,11 @@ export default class Game3 extends Phaser.Scene {
   create() {
    //add sound
    this.soundshoot = this.sound.add("shoots");
+   this.bonussound = this.sound.add("bonussound");
+   this.explosionsound = this.sound.add("explosionsound");
+   this.music = this.sound.add("musicgame");
+   this.music.stop();
+   this.music.play();
     //add background
     this.add.image(400, 300, "background3").setScale(1);
     let platform = this.physics.add.staticGroup();
@@ -145,9 +150,11 @@ export default class Game3 extends Phaser.Scene {
   update() {
     if (this.score >= 100) {
       this.scene.start("win3");
+      this.music.stop();
     }
     if (this.gameOver) {
       this.scene.start("gameOver");
+      this.music.stop();
     }
     //update player movement
     if (this.cursors.left.isDown) {
@@ -186,13 +193,13 @@ export default class Game3 extends Phaser.Scene {
   }
   spawnBonus1(){
     const randomX = Phaser.Math.RND.between(0,800);
-    this.bonus1.create(randomX, 0,'velocity').setCircle(40, 12, 10).setVelocity(50, 100).setBounce(1.1).setCollideWorldBounds(true);
+    this.bonus1.create(randomX, 0,'velocity').anims.play('velocityanimation').setCircle(40, 12, 10).setVelocity(50, 100).setBounce(1.1).setCollideWorldBounds(true);
     // this.bonus1.anims.play('velocityanimation');
     console.log("bonus spawned", randomX);
   }
   spawnBonus2(){
     const randomX = Phaser.Math.RND.between(0,800);
-    this.bonus2.create(randomX, 0,'extrapoints').setCircle(40, 12, 10).setVelocity(50, 100).setBounce(1.1).setCollideWorldBounds(true);
+    this.bonus2.create(randomX, 0,'extrapoints').anims.play('pointsanimation').setCircle(40, 12, 10).setVelocity(50, 100).setBounce(1.1).setCollideWorldBounds(true);
     // this.bonus2.anims.play('pointsanimation');
     console.log("bonus spawned", randomX);
   }
@@ -200,11 +207,13 @@ export default class Game3 extends Phaser.Scene {
     enemy.disableBody(true, true);
     shoot.disableBody(true, true);
     this.score += 20;
-    this.scoreText.setText("Score: " + this.score)
+    this.scoreText.setText("Score: " + this.score);
+    this.explosionsound.play();
 
   }
   playerDeath(player, enemy){
-    this.gameOver = true
+    this.gameOver = true;
+    this.explosionsound.play();
   }
   resetVelocity(){
     this.vel = 430
@@ -218,11 +227,13 @@ export default class Game3 extends Phaser.Scene {
       callbackScope: this,
       repeat: 1,
     })
+    this.bonussound.play();
   }
   extraPoint(player, bonus2){
     bonus2.disableBody(true,true);
     this.score += 100;
     this.scoreText.setText("Score: " + this.score);
+    this.bonussound.play();
   }
   reduce(enemy, platform){
     enemy.disableBody(true, true);
