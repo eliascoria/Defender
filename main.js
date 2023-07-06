@@ -8,6 +8,8 @@ import Preload from "./assets/scenes/Preload.js";
 import Win from "./assets/scenes/Win.js";
 import Win3 from "./assets/scenes/Win3.js";
 import Win2 from "./assets/scenes/Win2.js";
+import Cinematic from "./assets/scenes/Cinematica.js";
+import Cinematica from "./assets/scenes/Cinematica.js";
 
 // Create a new Phaser config object
 const config = {
@@ -36,7 +38,7 @@ const config = {
   // List of scenes to load
   // Only the first scene will be shown
   // Remember to import the scene before adding it to the list
-  scene: [Preload, Game,Game2,Game3, Menu, GameOver, Help, Win, Win2, Win3 ],
+  scene: [Preload, Game,Game2,Game3, Menu, GameOver, Help, Win, Win2, Win3, Cinematica, ],
 };
 
 // Create a new Phaser game instance

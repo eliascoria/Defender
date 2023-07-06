@@ -257,7 +257,8 @@ export default class Game3 extends Phaser.Scene {
       shoot.disableBody(true,true);
       this.hits ++
       if(this.hits = 100){
-        this.scene.start("win3")
+        this.scene.start("win3");
+        this.music.stop();
       }
     }
   onSecond() {
