@@ -17,7 +17,7 @@ export default class Game2 extends Phaser.Scene {
    this.soundshoot = this.sound.add("shoots");
    this.bonussound = this.sound.add("bonussound");
    this.explosionsound = this.sound.add("explosionsound");
-   this.music = this.sound.add("musicgame");
+   this.music = this.sound.add("musicgame", { loop: true});
    this.music.stop();
    this.music.play();
     //add background
@@ -34,7 +34,7 @@ export default class Game2 extends Phaser.Scene {
     //add bonus
     this.bonus1 = this.physics.add.group();
     this.time.addEvent({
-      delay: 45000,
+      delay: 15000,
       callback: this.spawnBonus1,
       callbackScope: this,
       loop: true,
